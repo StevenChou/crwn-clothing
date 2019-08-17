@@ -14,8 +14,8 @@ import Header from './components/header/header.component';
 
 import {
   auth,
-  createUserProfileDocument,
-  addCollectionAndDocuments
+  createUserProfileDocument
+  //addCollectionAndDocuments
 } from './firebase/firebase.utils';
 
 import { setCurrentUser } from './redux/user/user.actions';
@@ -27,7 +27,10 @@ class App extends React.Component {
 
   // 取得登入的 user 資訊
   componentDidMount() {
-    const { setCurrentUser, collectionsArray } = this.props;
+    const {
+      setCurrentUser
+      //collectionsArray
+    } = this.props;
 
     // ** observables + observer pattern
     this.unsubscribeFromAuth = auth.onAuthStateChanged(

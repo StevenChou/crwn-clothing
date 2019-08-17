@@ -36,3 +36,13 @@ export const selectCollection = collectionUrlParam =>
 //         collection => collection.id === COLLECTION_ID_MAP[collectionUrlParam]
 //       )
 //   );
+
+export const selectIsCollectionFetching = createSelector(
+  [selectShop],
+  shop => shop.isFetching
+);
+
+export const selectIsCollectionsLoaded = createSelector(
+  [selectShop],
+  shop => !!shop.collections
+);
