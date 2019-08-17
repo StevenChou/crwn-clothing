@@ -29,27 +29,31 @@ class App extends React.Component {
   componentDidMount() {
     const { setCurrentUser, collectionsArray } = this.props;
 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+    // ** observables + observer pattern
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(
+      async userAuth => {
+        if (userAuth) {
+          const userRef = await createUserProfileDocument(userAuth);
 
-        // 註冊事件(即時連線 firestore)
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
+          // 註冊事件(即時連線 firestore)
+          userRef.onSnapshot(snapShot => {
+            setCurrentUser({
+              id: snapShot.id,
+              ...snapShot.data()
+            });
           });
-        });
-      } else {
-        setCurrentUser(userAuth);
-      }
+        } else {
+          setCurrentUser(userAuth);
+        }
 
-      //  *** 只是一個批次上傳的工具
-      // addCollectionAndDocuments(
-      //   'collections',
-      //   collectionsArray.map(({ title, items }) => ({ title, items }))
-      // );
-    });
+        //  *** 只是一個批次上傳的工具
+        // addCollectionAndDocuments(
+        //   'collections',
+        //   collectionsArray.map(({ title, items }) => ({ title, items }))
+        // );
+      },
+      error => console.log(error)
+    );
   }
 
   // 取消偵測 OAuth 的狀態變更

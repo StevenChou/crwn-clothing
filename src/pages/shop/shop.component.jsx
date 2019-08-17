@@ -28,6 +28,15 @@ class ShopPage extends React.Component {
     const { updateCollections } = this.props;
     const collectionRef = firestore.collection('collections');
 
+    // 方法一： Use the Cloud Firestore REST API
+    // fetch(
+    //   'https://firestore.googleapis.com/v1/projects/crwn-db-e7c7a/databases/(default)/documents/collections'
+    // )
+    //   .then(res => res.json())
+    //   .then(collections => console.log('>>> ', collections));
+
+    // 方法二(Best Way)
+    // firebase 支援 live reload，也支援 promise(一般公司用)
     collectionRef.get().then(snapshot => {
       const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
       updateCollections(collectionsMap);
