@@ -10,6 +10,8 @@ const mapStateToProps = createStructuredSelector({
   isLoading: selectIsCollectionFetching
 });
 
+// 組合多個 HOC，可以使用 compose
+// 順序由右到左
 const CollectionsOverviewContainer = compose(
   connect(mapStateToProps),
   WithSpinner
